@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  loader:
+    build:
+      context: loader/
+    environment: 
+      - PYTHON_ENV="docker"
+  ml:
+    build:
+        context: ml/
+    enviroment:
+    - PYTHON_ENV='docker'

@@ -1,0 +1,2 @@
+python download_images.py
+python remove_outliers.py
