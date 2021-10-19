@@ -14,21 +14,9 @@ logging.basicConfig(filename='./../memes_download.log',
                             datefmt='%H:%M:%S',
                             level=logging.INFO)
 
-class TqdmLoggingHandler(logging.StreamHandler):
-    def emit(self, record):
-        try:
-            msg = self.format(record)
-            tqdm.write(msg, end=self.terminator)
-        except RecursionError:
-            raise
-        except Exception:
-            self.handleError(record)
-
-
 class Loader():
     def __init__(self, path_2_file,path_2_dataset):
         self.logger = logging.getLogger('Download')
-        self.logger.addHandler(TqdmLoggingHandler())
 
         self.path_2_file = path_2_file
         self.path_2_dataset = path_2_dataset
@@ -56,6 +44,7 @@ class Loader():
             try:
                 img = Image.open(BytesIO(response.content))
                 img.save(self.path_2_dataset+'/'+str(row['id'])+'.png')
+                self.logger.info('Process '+ str(process) +' has saved images with id ' + str(row['id']))
 
             except IOError:
                 try:
